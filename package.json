@@ -1,0 +1,36 @@
+{
+  "name": "dfs-rem2rpx",
+  "version": "1.0.1",
+  "description": "According to one stylesheet,make the rem to rpx",
+  "main": "index.js",
+  "dependencies": {
+    "chalk": "~0.5.1",
+    "commander": "~2.6.0",
+    "css": "~2.2.0",
+    "extend": "~3.0.0",
+    "fs-extra": "~0.16.3",
+    "less": "^3.10.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "rem2rpx": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenlang0311/dfs-rem2rpx.git"
+  },
+  "keywords": [
+    "css",
+    "rem",
+    "rpx",
+    "rem2rpx"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenlang0311/dfs-rem2rpx/issues"
+  },
+  "homepage": "https://github.com/chenlang0311/dfs-rem2rpx#readme"
+}
