@@ -1,6 +1,6 @@
 {
   "name": "dfs-rem2rpx",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "According to one stylesheet,make the rem to rpx",
   "main": "index.js",
   "dependencies": {

@@ -2,9 +2,9 @@
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.0.3**
+Version: **1.0.4**
 ### Notice 
-    The version in 1.* is just support the file of **css**
+    The version in 1.* is just support the file of css
 
 ### install 
     Run npm install dfs-rem2rpx -g
@@ -25,6 +25,7 @@ rem2rpx -o build a.css
 }
 .b{
   width: 1rem;/*no*/
+  padding: .2rem .4rem 0 0.4rem;
 }
 @keyframes mymove
 {
@@ -50,6 +51,7 @@ to {top:2rem;}
 
 .b {
   width: 1rem;
+  padding: 20rpx 40rpx 0 40rpx;
 }
 
 @keyframes mymove {

@@ -6,6 +6,7 @@
 }
 .b{
   width: 1rem;/*no*/
+  padding: .2rem .4rem 0 0.4rem;
 }
 @keyframes mymove
 {

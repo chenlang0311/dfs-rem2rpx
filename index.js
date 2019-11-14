@@ -69,7 +69,7 @@ program.args.forEach(function (filePath) {
         // generate rem version stylesheet
         if (config.remVersion) {
             var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-            console.log('newCssText-----------',newCssText)
+            // console.log('newCssText-----------',newCssText)
             var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
        
             var newFilepath = path.join(outputPath, newFileName);
