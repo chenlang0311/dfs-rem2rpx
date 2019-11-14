@@ -1,17 +1,21 @@
 # dfs-rem2rpx
+
 According to one stylesheet,make the rem to rpx
 
-Version: 1.0.1
+Version: **1.0.3**
+### Notice 
+    The version in 1.* is just support the file of **css**
 
 ### install 
-Run npm install dfs-rem2rpx -g
+    Run npm install dfs-rem2rpx -g
+
 ### Usage
 ```
-
 rem2rpx -o build a.css
 ```
 
 ### source a.css
+
 ```
 .a {
   width: 1rem;
