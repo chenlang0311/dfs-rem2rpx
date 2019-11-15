@@ -2,7 +2,7 @@
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.0.8**
+Version: **1.0.9**
 ### Notice 
     The version in 1.* is just support the file of css and less
 
@@ -14,6 +14,12 @@ Version: **1.0.8**
 ### Usage css file
 ```
 rem2rpx -o build a.css
+
+options:
+-u, --rpxUnit :set `rpx` unit value (default: 100)'
+-r, --rpxVersion :whether to generate rpx version stylesheet (default: true)
+-p, --rpxPrecision :set rpx value precision (default: 6)', 6)
+-o, --output [path]', 'the output file dirname'
 ```
 
 ### source

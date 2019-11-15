@@ -43,11 +43,11 @@ function deleteFile(filePth){
 }
 
 program.version(pkg.version)
-    .option('-u, --remUnit [value]', 'set `rem` unit value (default: 75)', 100)
-    .option('-x, --threeVersion [value]', 'whether to generate @1x, @2x and @3x version stylesheet (default: false)', false)
-    .option('-r, --remVersion [value]', 'whether to generate rem version stylesheet (default: true)', true)
-    .option('-b, --baseDpr [value]', 'set base device pixel ratio (default: 2)', 2)
-    .option('-p, --remPrecision [value]', 'set rem value precision (default: 6)', 6)
+    .option('-u, --rpxUnit [value]', 'set `rpx` unit value (default: 100)', 100)
+    .option('-x, --threeVersion [value]', 'whether to generate @1x, @2x and @3x version stylesheet (default: false)', false) //for the feature
+    .option('-r, --rpxVersion [value]', 'whether to generate rpx version stylesheet (default: true)', true)
+    .option('-b, --baseDpr [value]', 'set base device pixel ratio (default: 2)', 2) //for the feature
+    .option('-p, --rpxPrecision [value]', 'set rpxvalue precision (default: 6)', 6)
     .option('-o, --output [path]', 'the output file dirname')
     .parse(process.argv);
 
@@ -64,7 +64,7 @@ var config = {
     remPrecision: deserializeValue(program.remPrecision)
 };
 var rem2rpxIns = new Rem2rpx(config);
-
+console.log("program.args----",program.args)
 program.args.forEach(function (filePath) {
     let exc = path.extname(filePath);
     if (exc === '.css') {

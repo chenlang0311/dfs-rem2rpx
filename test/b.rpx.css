@@ -1,0 +1,6 @@
+@media screen and (max-width: 300px) {
+  body {
+    width: 300rpx;
+    height: 1rem;
+  }
+}
