@@ -34,7 +34,13 @@ function saveFile(filePath, content) {
     });
     console.log(chalk.green.bold('[Success]: ') + filePath);
 }
-
+function deleteFile(filePth){
+    fs.unlinkSync(filePth,(err) => {
+        if (err) {
+          console.log('deleteFile-Erroe',err);
+        }
+      });
+}
 
 program.version(pkg.version)
     .option('-u, --remUnit [value]', 'set `rem` unit value (default: 75)', 100)
@@ -92,6 +98,7 @@ program.args.forEach(function (filePath) {
                 var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
                 var newFilepath = path.join(outputPath, newFileName);
                 saveFile(newFilepath, newCssText);
+                deleteFile(newLessfilePath)
             }
         })
     }else{

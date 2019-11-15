@@ -2,12 +2,14 @@
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.0.4**
+Version: **1.0.8**
 ### Notice 
     The version in 1.* is just support the file of css and less
 
 ### install 
     Run npm install dfs-rem2rpx -g
+    if you want to compile less file you must install the less
+    Run npm install less -g
 
 ### Usage css file
 ```
