@@ -1,6 +1,6 @@
 {
   "name": "dfs-rem2rpx",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "According to one stylesheet,make the rem to rpx",
   "main": "index.js",
   "dependencies": {
@@ -9,7 +9,8 @@
     "css": "~2.2.0",
     "extend": "~3.0.0",
     "fs-extra": "~0.16.3",
-    "less": "^3.10.3"
+    "less": "^3.10.3",
+    "shelljs": "^0.8.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +24,7 @@
   },
   "keywords": [
     "css",
+    "less",
     "rem",
     "rpx",
     "rem2rpx"

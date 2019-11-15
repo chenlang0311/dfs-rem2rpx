@@ -6,7 +6,8 @@ var pkg = require('./package.json');
 var chalk = require('chalk');
 var path = require('path');
 var fs = require('fs-extra');
-
+var less = require("less")
+var shell = require("shelljs")
 
 
 // string to variables of proper type（thanks to zepto）
@@ -64,17 +65,35 @@ program.args.forEach(function (filePath) {
         var cssText = fs.readFileSync(filePath, {
             encoding: 'utf8'
         });
+        console.log('newCssText-----------',cssText)
         var outputPath = program.output || path.dirname(filePath);
         var fileName = path.basename(filePath);
-        // generate rem version stylesheet
         if (config.remVersion) {
             var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-            // console.log('newCssText-----------',newCssText)
             var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
-       
             var newFilepath = path.join(outputPath, newFileName);
             saveFile(newFilepath, newCssText);
         }
+    }else if(exc === '.less'){
+        let newLessfilePath = filePath.replace(".less",".css")
+        shell.exec("lessc "+ filePath+ " > "+ newLessfilePath,(err,stdout,stderr)=>{
+            if(err){
+                console.log(chalk.red.bold('[BUild Less File Error]: Plaese try again!') + err);
+                return ;
+            }
+            var cssText = fs.readFileSync(newLessfilePath, {
+                encoding: 'utf8'
+            });
+            var outputPath = program.output || path.dirname(newLessfilePath);
+            var fileName = path.basename(newLessfilePath);
+            // generate rem version stylesheet
+            if (config.remVersion) {
+                var newCssText = rem2rpxIns.generateRpx(cssText,exc);
+                var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
+                var newFilepath = path.join(outputPath, newFileName);
+                saveFile(newFilepath, newCssText);
+            }
+        })
     }else{
         console.log(chalk.red.bold('[NOT SUPPORT]: ') + ' This version is not support---'+ exc+ '---file,please change the version!');
         return ;

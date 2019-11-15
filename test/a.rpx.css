@@ -1,0 +1,13 @@
+.a {
+  width: 100rpx;
+  height: 10rpx;
+  line-height: 10rpx;
+  border: 1px solid red;
+}
+
+.a .b {
+  width: 100rpx;
+  height: 0.1rem;
+  line-height: 10rpx;
+  border: 1px solid red;
+}
