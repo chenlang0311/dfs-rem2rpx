@@ -2,7 +2,7 @@
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.1.0**
+Version: **1.1.1**
 ### Notice 
     The version in 1.* is just support the file of css and less and scss
 

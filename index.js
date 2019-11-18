@@ -57,21 +57,19 @@ if (!program.args.length) {
 }
 
 var config = {
-    remUnit: deserializeValue(program.remUnit),
+    rpxUnit: deserializeValue(program.rpxUnit),
     threeVersion: deserializeValue(program.threeVersion),
     rpxVersion: deserializeValue(program.rpxVersion),
     baseDpr: deserializeValue(program.baseDpr),
     remPrecision: deserializeValue(program.remPrecision)
 };
 var rem2rpxIns = new Rem2rpx(config);
-console.log("program.args----",program.args)
 program.args.forEach(function (filePath) {
     let exc = path.extname(filePath);
     if (exc === '.css') {
         var cssText = fs.readFileSync(filePath, {
             encoding: 'utf8'
         });
-        console.log('newCssText-----------',cssText)
         var outputPath = program.output || path.dirname(filePath);
         var fileName = path.basename(filePath);
         if (config.rpxVersion) {
@@ -111,13 +109,11 @@ program.args.forEach(function (filePath) {
             var cssText = fs.readFileSync(newLessfilePath, {
                 encoding: 'utf8'
             });
-            console.log("cssText----scss",cssText)
             var outputPath = program.output || path.dirname(newLessfilePath);
             var fileName = path.basename(newLessfilePath);
             // generate rem version stylesheet
             if (config.rpxVersion) {
                 var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-                console.log("newCssText----------",newCssText)
                 var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
                 var newFilepath = path.join(outputPath, newFileName);
                 saveFile(newFilepath, newCssText);
