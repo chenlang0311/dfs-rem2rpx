@@ -1,12 +1,13 @@
 # dfs-rem2rpx
-
+English | [简体中文](./README-cn.md)
 According to one stylesheet,make the rem to rpx
 
 Version: **1.1.2**
-### Notice 
+### Notice
     The version in 1.* is just support the file of css and less and scss
 
-### install 
+### install
+
     Run npm install dfs-rem2rpx -g
     if you want to compile less file you must install the less
     Run npm install less -g
@@ -14,8 +15,9 @@ Version: **1.1.2**
     Run npm install node-sass -g
 
 ### Usage css file
+
 ```
-rem2rpx -o build a.css
+rem2rpx -o build a.css  or rem2rpx -o build a.less  or rem2rpx -o build a.scss
 
 options:
 -u, --rpxUnit :set `rpx` unit value (default: 100)'
@@ -25,7 +27,8 @@ options:
 ```
 
 ### source
-#### the source file is a css file like a.css
+
+
 ```
 .a {
   width: 1rem;
@@ -51,6 +54,7 @@ to {top:2rem;}
 ```
 
 #### output  build/a.rpx.css
+
 ```
 .a {
   width: 100rpx;
@@ -81,115 +85,3 @@ to {top:2rem;}
   }
 }
 ```
-### Usage less file
-
-```
-rem2rpx -o build a.less
-```
-#### the source file is a less file like a.less
-```
-.a {
-    width: 1rem;
-    height: .1rem;
-    line-height: 0.1rem;
-    border: 1px solid red;
-    .c{
-        width: 1rem;
-        height: .1rem;
-        line-height: 0.1rem;
-        border: 1px solid red;
-    }
-  }
-  .b{
-    width: 1rem;/*no*/
-    padding: .2rem .4rem 0 0.4rem;
-  }
-  @keyframes mymove
-  {
-  from {top:0px;}
-  to {top:2rem;}
-  }
-  @media screen and (max-width: 300px) {
-    body {
-       width: 3rem;
-       height: 1rem;/*no*/
-    }
-  }
-  ```
-
-#### output  build/a.css
-```
-  .a {
-  width: 1rem;
-  height: 0.1rem;
-  line-height: 0.1rem;
-  border: 1px solid red;
-}
-.a .c {
-  width: 1rem;
-  height: 0.1rem;
-  line-height: 0.1rem;
-  border: 1px solid red;
-}
-.b {
-  width: 1rem;
-  /*no*/
-  padding: 0.2rem 0.4rem 0 0.4rem;
-}
-@keyframes mymove {
-  from {
-    top: 0px;
-  }
-  to {
-    top: 2rem;
-  }
-}
-@media screen and (max-width: 300px) {
-  body {
-    width: 3rem;
-    height: 1rem;
-    /*no*/
-  }
-}
-
-  ```
-
-#### finally output  build/a.rpx.css
-
-```
-  .a {
-  width: 100rpx;
-  height: 10rpx;
-  line-height: 10rpx;
-  border: 1px solid red;
-}
-
-.a .c {
-  width: 100rpx;
-  height: 10rpx;
-  line-height: 10rpx;
-  border: 1px solid red;
-}
-
-.b {
-  width: 1rem;
-  padding: 20rpx 40rpx 0 40rpx;
-}
-
-@keyframes mymove {
-  from {
-    top: 0px;
-  }
-
-  to {
-    top: 200rpx;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  body {
-    width: 300rpx;
-    height: 1rem;
-  }
-}
-  ```
