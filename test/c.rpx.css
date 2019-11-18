@@ -1,0 +1,28 @@
+.topNavBar nav {
+  padding-top: 5rpx;
+}
+
+.topNavBar nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topNavBar nav > ul > li {
+  float: left;
+  margin-left: 17rpx;
+  margin-right: 17rpx;
+  position: relative;
+}
+
+.topNavBar nav > ul > li > a {
+  font-size: 12rpx;
+  color: inherit;
+  font-weight: bold;
+  border-top: 3rpx solid transparent;
+  border-bottom: 3rpx solid transparent;
+  padding-top: 5rpx;
+  padding-bottom: 5rpx;
+  display: block;
+  position: relative;
+}

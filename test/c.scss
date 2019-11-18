@@ -1,0 +1,27 @@
+.topNavBar {
+  nav {
+    padding-top: 0.05rem;
+    > ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      > li {
+        float: left;
+        margin-left: .17rem;
+        margin-right: 0.17rem;
+        position: relative;
+        > a {
+          font-size: 0.12rem;
+          color: inherit;
+          font-weight: bold;
+          border-top: 0.03rem solid transparent;
+          border-bottom:.03rem solid transparent;
+          padding-top: .05rem;
+          padding-bottom: 0.05rem;
+          display: block;
+          position: relative;
+        }
+      }
+    }
+  }
+}

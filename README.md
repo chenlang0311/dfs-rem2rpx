@@ -2,14 +2,16 @@
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.0.9**
+Version: **1.1.0**
 ### Notice 
-    The version in 1.* is just support the file of css and less
+    The version in 1.* is just support the file of css and less and scss
 
 ### install 
     Run npm install dfs-rem2rpx -g
     if you want to compile less file you must install the less
     Run npm install less -g
+    if you want to compile scss file you must install the node-sass
+    Run npm install node-sass -g
 
 ### Usage css file
 ```

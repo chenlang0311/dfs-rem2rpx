@@ -59,7 +59,7 @@ if (!program.args.length) {
 var config = {
     remUnit: deserializeValue(program.remUnit),
     threeVersion: deserializeValue(program.threeVersion),
-    remVersion: deserializeValue(program.remVersion),
+    rpxVersion: deserializeValue(program.rpxVersion),
     baseDpr: deserializeValue(program.baseDpr),
     remPrecision: deserializeValue(program.remPrecision)
 };
@@ -74,7 +74,7 @@ program.args.forEach(function (filePath) {
         console.log('newCssText-----------',cssText)
         var outputPath = program.output || path.dirname(filePath);
         var fileName = path.basename(filePath);
-        if (config.remVersion) {
+        if (config.rpxVersion) {
             var newCssText = rem2rpxIns.generateRpx(cssText,exc);
             var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
             var newFilepath = path.join(outputPath, newFileName);
@@ -93,8 +93,31 @@ program.args.forEach(function (filePath) {
             var outputPath = program.output || path.dirname(newLessfilePath);
             var fileName = path.basename(newLessfilePath);
             // generate rem version stylesheet
-            if (config.remVersion) {
+            if (config.rpxVersion) {
                 var newCssText = rem2rpxIns.generateRpx(cssText,exc);
+                var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
+                var newFilepath = path.join(outputPath, newFileName);
+                saveFile(newFilepath, newCssText);
+                deleteFile(newLessfilePath)
+            }
+        })
+    }else if(exc === '.scss'){
+        let newLessfilePath = filePath.replace(".scss",".css")
+        shell.exec("node-sass "+ filePath + " " +newLessfilePath,(err,stdout,stderr)=>{
+            if(err){
+                console.log(chalk.red.bold('[BUild Less File Error]: Plaese try again!') + err);
+                return ;
+            }
+            var cssText = fs.readFileSync(newLessfilePath, {
+                encoding: 'utf8'
+            });
+            console.log("cssText----scss",cssText)
+            var outputPath = program.output || path.dirname(newLessfilePath);
+            var fileName = path.basename(newLessfilePath);
+            // generate rem version stylesheet
+            if (config.rpxVersion) {
+                var newCssText = rem2rpxIns.generateRpx(cssText,exc);
+                console.log("newCssText----------",newCssText)
                 var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
                 var newFilepath = path.join(outputPath, newFileName);
                 saveFile(newFilepath, newCssText);
