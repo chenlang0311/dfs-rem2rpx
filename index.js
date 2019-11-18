@@ -61,7 +61,7 @@ var config = {
     threeVersion: deserializeValue(program.threeVersion),
     rpxVersion: deserializeValue(program.rpxVersion),
     baseDpr: deserializeValue(program.baseDpr),
-    remPrecision: deserializeValue(program.remPrecision)
+    rpxPrecision: deserializeValue(program.rpxPrecision)
 };
 var rem2rpxIns = new Rem2rpx(config);
 program.args.forEach(function (filePath) {
