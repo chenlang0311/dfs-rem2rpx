@@ -1,0 +1,18 @@
+.package_price_wrap{
+    padding-left: .16rem;
+  }
+  .package_old_price{
+    font-size: .26rem;
+    color: #999;
+    line-height: 1;
+    margin-top: .3rem;
+
+  }
+  .package_new_price{
+    font-size: .26rem;
+    color: #ff5146;
+    font-weight: 500;
+    line-height: -1.0rem;
+
+    margin-top: -.06rem;
+  }
