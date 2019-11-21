@@ -80,9 +80,20 @@ program.args.forEach(function (filePath) {
         }
     }else if(exc === '.less'){
         let newLessfilePath = filePath.replace(".less",".css")
+        
+        if (!shell.which('lessc')) {
+            //在控制台输出内容
+            console.log(chalk.red.bold('Sorry, this script requires less,you must run [npm install -g less]'));
+            shell.exit(1);
+        }  
         shell.exec("lessc "+ filePath+ " > "+ newLessfilePath,(err,stdout,stderr)=>{
             if(err){
-                console.log(chalk.red.bold('[BUild Less File Error]: Plaese try again!') + err);
+                // console.log(chalk.red.bold('Ready To Install Less,Please wait ...'));
+                // shell.exec("npm install -g less",(err)=>{
+                //     if(err)console.log('Install less...',err)
+                //     console.log(chalk.blue.bold('[Install Less Success]: Plaese try again!'));
+                //     return ;
+                // })
                 return ;
             }
             var cssText = fs.readFileSync(newLessfilePath, {
@@ -101,6 +112,11 @@ program.args.forEach(function (filePath) {
         })
     }else if(exc === '.scss'){
         let newLessfilePath = filePath.replace(".scss",".css")
+        if (!shell.which('node-sass')) {
+            //在控制台输出内容
+            console.log(chalk.red.bold('Sorry, this script requires node-sass,you must run [npm install -g node-sass]'));
+            shell.exit(1);
+        } 
         shell.exec("node-sass "+ filePath + " " +newLessfilePath,(err,stdout,stderr)=>{
             if(err){
                 console.log(chalk.red.bold('[BUild Less File Error]: Plaese try again!') + err);
