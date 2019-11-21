@@ -6,8 +6,10 @@ var pkg = require('./package.json');
 var chalk = require('chalk');
 var path = require('path');
 var fs = require('fs-extra');
-var less = require("less")
 var shell = require("shelljs")
+const log = message => console.log(chalk.green(`${message}`))
+const successLog = message => console.log(chalk.blue(`${message}`))
+const errorLog = error => console.log(chalk.red(`${error}`))
 
 
 // string to variables of proper type（thanks to zepto）
@@ -64,78 +66,79 @@ var config = {
     rpxPrecision: deserializeValue(program.rpxPrecision)
 };
 var rem2rpxIns = new Rem2rpx(config);
+
+
+function handleFile(filePath,exc,needDeleted){
+    var cssText = fs.readFileSync(filePath, {
+        encoding: 'utf8'
+    });
+    var outputPath = program.output || path.dirname(filePath);
+    var fileName = path.basename(filePath);
+    if (config.rpxVersion) {
+        var newCssText = rem2rpxIns.generateRpx(cssText,exc);
+        var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
+        var newFilepath = path.join(outputPath, newFileName);
+        saveFile(newFilepath, newCssText);
+        if(needDeleted)deleteFile(filePath);
+    }
+}
+async function installCommand(commander,fileType){
+    log(`The ${commander} must install ${fileType}, do you want to install ${fileType}(Y/N)Y`);
+    process.stdin.on('data', async chunk => {
+        const inputName = String(chunk).trim().toString().toLocaleLowerCase(); 
+        if(inputName.indexOf("y")==0 || inputName==""){
+             log(`Installing ${fileType=='less'?fileType:commander} please waiting...`)
+             shell.exec(`npm install -g ${fileType=='less'?fileType:commander}`,(err)=>{
+                 if(err)console.log(`Install ${fileType} fail,you can run [npm install -g ${fileType}]`)
+                 successLog(`[Install ${fileType} Success]: Plaese try again!`);
+                 process.stdin.emit('end')
+              })
+        }else{
+            errorLog(`The ${commander} must install ${fileType},you can run [npm install -g ${fileType}]`)
+            process.stdin.emit('end')
+        }
+      })
+      process.stdin.on('end', () => {
+        log('exit')
+        process.exit()
+      })
+}
 program.args.forEach(function (filePath) {
     let exc = path.extname(filePath);
     if (exc === '.css') {
-        var cssText = fs.readFileSync(filePath, {
-            encoding: 'utf8'
-        });
-        var outputPath = program.output || path.dirname(filePath);
-        var fileName = path.basename(filePath);
-        if (config.rpxVersion) {
-            var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-            var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
-            var newFilepath = path.join(outputPath, newFileName);
-            saveFile(newFilepath, newCssText);
-        }
+        handleFile(filePath,exc)
     }else if(exc === '.less'){
         let newLessfilePath = filePath.replace(".less",".css")
         
         if (!shell.which('lessc')) {
             //在控制台输出内容
-            console.log(chalk.red.bold('Sorry, this script requires less,you must run [npm install -g less]'));
-            shell.exit(1);
-        }  
-        shell.exec("lessc "+ filePath+ " > "+ newLessfilePath,(err,stdout,stderr)=>{
-            if(err){
-                // console.log(chalk.red.bold('Ready To Install Less,Please wait ...'));
-                // shell.exec("npm install -g less",(err)=>{
-                //     if(err)console.log('Install less...',err)
-                //     console.log(chalk.blue.bold('[Install Less Success]: Plaese try again!'));
-                //     return ;
-                // })
-                return ;
-            }
-            var cssText = fs.readFileSync(newLessfilePath, {
-                encoding: 'utf8'
-            });
-            var outputPath = program.output || path.dirname(newLessfilePath);
-            var fileName = path.basename(newLessfilePath);
-            // generate rem version stylesheet
-            if (config.rpxVersion) {
-                var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-                var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
-                var newFilepath = path.join(outputPath, newFileName);
-                saveFile(newFilepath, newCssText);
-                deleteFile(newLessfilePath)
-            }
-        })
+            // console.log(chalk.red.bold('Sorry, this script requires less,you must run [npm install -g less]'));
+            installCommand("lessc","less")
+        }else{
+            shell.exec("lessc "+ filePath+ " > "+ newLessfilePath,(err,stdout,stderr)=>{
+                        if(err){
+                            errorLog('[Run lessc fial]:'+err);
+                            return ;
+                        }
+                        handleFile(newLessfilePath,exc,true)
+                    })
+        }
+       
     }else if(exc === '.scss'){
         let newLessfilePath = filePath.replace(".scss",".css")
         if (!shell.which('node-sass')) {
             //在控制台输出内容
-            console.log(chalk.red.bold('Sorry, this script requires node-sass,you must run [npm install -g node-sass]'));
-            shell.exit(1);
-        } 
-        shell.exec("node-sass "+ filePath + " " +newLessfilePath,(err,stdout,stderr)=>{
-            if(err){
-                console.log(chalk.red.bold('[BUild Less File Error]: Plaese try again!') + err);
-                return ;
-            }
-            var cssText = fs.readFileSync(newLessfilePath, {
-                encoding: 'utf8'
-            });
-            var outputPath = program.output || path.dirname(newLessfilePath);
-            var fileName = path.basename(newLessfilePath);
-            // generate rem version stylesheet
-            if (config.rpxVersion) {
-                var newCssText = rem2rpxIns.generateRpx(cssText,exc);
-                var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
-                var newFilepath = path.join(outputPath, newFileName);
-                saveFile(newFilepath, newCssText);
-                deleteFile(newLessfilePath)
-            }
-        })
+            installCommand("node-sass","scss")
+        }else{
+            shell.exec("node-sass "+ filePath + " " +newLessfilePath,(err,stdout,stderr)=>{
+                if(err){
+                    errorLog('[Run node-sass fial]:'+err);
+                    return ;
+                }
+                handleFile(newLessfilePath,exc,true)
+            })
+        }
+        
     }else{
         console.log(chalk.red.bold('[NOT SUPPORT]: ') + ' This version is not support---'+ exc+ '---file,please change the version!');
         return ;
