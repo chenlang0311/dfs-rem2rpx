@@ -20,9 +20,9 @@ function deserializeValue(value) {
             value == "true" || value == true ||
             (value == "false" || value == false ? false :
                 value == "null" ? null :
-                !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
-                /^[\[\{]/.test(value) ? JSON.parse(value) :
-                value) :
+                    !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
+                        /^[\[\{]/.test(value) ? JSON.parse(value) :
+                            value) :
             value;
     } catch (e) {
         return value;
@@ -34,14 +34,14 @@ function saveFile(filePath, content) {
     fs.writeFileSync(filePath, content, {
         encoding: 'utf8'
     });
-    console.log(chalk.green.bold('[Success]: ') + filePath);
+    console.log(log('[Success]: ') + filePath);
 }
-function deleteFile(filePth){
-    fs.unlinkSync(filePth,(err) => {
+function deleteFile(filePth) {
+    fs.unlinkSync(filePth, (err) => {
         if (err) {
-          console.log('deleteFile-Erroe',err);
+            console.log('deleteFile-Erroe', err);
         }
-      });
+    });
 }
 
 program.version(pkg.version)
@@ -68,79 +68,74 @@ var config = {
 var rem2rpxIns = new Rem2rpx(config);
 
 
-function handleFile(filePath,exc,needDeleted){
+function handleFile(filePath, exc, needDeleted) {
     var cssText = fs.readFileSync(filePath, {
         encoding: 'utf8'
     });
     var outputPath = program.output || path.dirname(filePath);
     var fileName = path.basename(filePath);
     if (config.rpxVersion) {
-        var newCssText = rem2rpxIns.generateRpx(cssText,exc);
+        var newCssText = rem2rpxIns.generateRpx(cssText, exc);
         var newFileName = fileName.replace(/(.debug)?.css/, '.rpx.css');
         var newFilepath = path.join(outputPath, newFileName);
         saveFile(newFilepath, newCssText);
-        if(needDeleted)deleteFile(filePath);
+        if (needDeleted) deleteFile(filePath);
     }
 }
-async function installCommand(commander,fileType){
+ function installCommand(commander, fileType) {
     log(`The ${commander} must install ${fileType}, do you want to install ${fileType}(Y/N)Y`);
-    process.stdin.on('data', async chunk => {
-        const inputName = String(chunk).trim().toString().toLocaleLowerCase(); 
-        if(inputName.indexOf("y")==0 || inputName==""){
-             log(`Installing ${fileType=='less'?fileType:commander} please waiting...`)
-             shell.exec(`npm install -g ${fileType=='less'?fileType:commander}`,(err)=>{
-                 if(err)console.log(`Install ${fileType} fail,you can run [npm install -g ${fileType}]`)
-                 successLog(`[Install ${fileType} Success]: Plaese try again!`);
-                 process.stdin.emit('end')
-              })
-        }else{
+    process.stdin.on('data', chunk => {
+        const inputName = String(chunk).trim().toString().toLocaleLowerCase();
+        if (inputName.indexOf("y") == 0 || inputName == "") {
+            log(`Installing ${fileType == 'less' ? fileType : commander} please waiting...`)
+            shell.exec(`npm install -g ${fileType == 'less' ? fileType : commander}`, (err) => {
+                if (err) console.log(`Install ${fileType} fail,you can run [npm install -g ${fileType}]`)
+                successLog(`[Install ${fileType} Success]: Plaese try again!`);
+                process.stdin.emit('end')
+            })
+        } else {
             errorLog(`The ${commander} must install ${fileType},you can run [npm install -g ${fileType}]`)
             process.stdin.emit('end')
         }
-      })
-      process.stdin.on('end', () => {
+    })
+    process.stdin.on('end', () => {
         log('exit')
         process.exit()
-      })
+    })
 }
 program.args.forEach(function (filePath) {
     let exc = path.extname(filePath);
     if (exc === '.css') {
-        handleFile(filePath,exc)
-    }else if(exc === '.less'){
-        let newLessfilePath = filePath.replace(".less",".css")
-        
+        handleFile(filePath, exc)
+    } else if (exc === '.less') {
+        let newLessfilePath = filePath.replace(".less", ".css")
         if (!shell.which('lessc')) {
-            //在控制台输出内容
-            // console.log(chalk.red.bold('Sorry, this script requires less,you must run [npm install -g less]'));
-            installCommand("lessc","less")
-        }else{
-            shell.exec("lessc "+ filePath+ " > "+ newLessfilePath,(err,stdout,stderr)=>{
-                        if(err){
-                            errorLog('[Run lessc fial]:'+err);
-                            return ;
-                        }
-                        handleFile(newLessfilePath,exc,true)
-                    })
-        }
-       
-    }else if(exc === '.scss'){
-        let newLessfilePath = filePath.replace(".scss",".css")
-        if (!shell.which('node-sass')) {
-            //在控制台输出内容
-            installCommand("node-sass","scss")
-        }else{
-            shell.exec("node-sass "+ filePath + " " +newLessfilePath,(err,stdout,stderr)=>{
-                if(err){
-                    errorLog('[Run node-sass fial]:'+err);
-                    return ;
+            installCommand("lessc", "less")
+        } else {
+            shell.exec("lessc " + filePath + " > " + newLessfilePath, (err, stdout, stderr) => {
+                if (err) {
+                    errorLog('[Run lessc fial]:' + err);
+                    return;
                 }
-                handleFile(newLessfilePath,exc,true)
+                handleFile(newLessfilePath, exc, true)
             })
         }
-        
-    }else{
-        console.log(chalk.red.bold('[NOT SUPPORT]: ') + ' This version is not support---'+ exc+ '---file,please change the version!');
-        return ;
+
+    } else if (exc === '.scss') {
+        let newScssfilePath = filePath.replace(".scss", ".css")
+        if (!shell.which('node-sass')) {
+            installCommand("node-sass", "scss")
+        } else {
+            shell.exec("node-sass " + filePath + " " + newScssfilePath, (err, stdout, stderr) => {
+                if (err) {
+                    errorLog('[Run node-sass fial]:' + err);
+                    return;
+                }
+                handleFile(newScssfilePath, exc, true)
+            })
+        }
+    } else {
+        console.log(errorLog('[NOT SUPPORT]: ') + ' This version is not support---' + exc + '---file,please change the version!');
+        return;
     }
 });

@@ -3,7 +3,7 @@ English | [简体中文](./README-cn.md)
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.2.1**
+Version: **1.2.2**
 ### Notice
     The version in 1.* is just support the file of css and less and scss
 
