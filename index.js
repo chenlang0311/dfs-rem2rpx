@@ -20,9 +20,9 @@ function deserializeValue(value) {
             value == "true" || value == true ||
             (value == "false" || value == false ? false :
                 value == "null" ? null :
-                !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
-                /^[\[\{]/.test(value) ? JSON.parse(value) :
-                value) :
+                    !/^0/.test(value) && !isNaN(num = Number(value)) ? num :
+                        /^[\[\{]/.test(value) ? JSON.parse(value) :
+                            value) :
             value;
     } catch (e) {
         return value;
