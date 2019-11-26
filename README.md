@@ -1,10 +1,13 @@
 # dfs-rem2rpx
+
 English | [简体中文](./README-cn.md)
 
 According to one stylesheet,make the rem to rpx
 
 Version: **1.2.1**
+
 ### Notice
+
     The version in 1.* is just support the file of css and less and scss
 
 ### install
@@ -28,7 +31,6 @@ options:
 ```
 
 ### source
-
 
 ```
 .a {
@@ -54,7 +56,7 @@ to {top:2rem;}
 }
 ```
 
-#### output  build/a.rpx.css
+#### output build/a.rpx.css
 
 ```
 .a {

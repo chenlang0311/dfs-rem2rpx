@@ -1,10 +1,13 @@
 # dfs-rem2rpx
+
 [English](./README.md) | 简体中文
 
-将一个样式表中的rem单位转化为rpx
+将一个样式表中的 rem 单位转化为 rpx
 
 版本: **1.2.1**
-### 注意 
+
+### 注意
+
     在1.*版本只支持编译css,less,scss文件
 
 ### 安装
@@ -24,11 +27,10 @@ rem2rpx -o build a.css  或者 rem2rpx -o build a.less  或者 rem2rpx -o build 
 -u, --rpxUnit :设置rem转rpx单位的比例，默认100
 -r, --rpxVersion :是否去编译rpx版本，默认为真
 -p, --rpxPrecision :rpx单位的精度，默认保存6位
--o, --output [path] : 输出文件的目录 
+-o, --output [path] : 输出文件的目录
 ```
 
 ### 资源示例
-
 
 ```
 .a {
@@ -54,7 +56,7 @@ to {top:2rem;}
 }
 ```
 
-#### 输出文件  build/a.rpx.css
+#### 输出文件 build/a.rpx.css
 
 ```
 .a {
