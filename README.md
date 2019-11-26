@@ -4,7 +4,7 @@ English | [简体中文](./README-cn.md)
 
 According to one stylesheet,make the rem to rpx
 
-Version: **1.2.1**
+Version: **1.2.3**
 
 ### Notice
 
