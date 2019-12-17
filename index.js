@@ -83,9 +83,9 @@ function handleFile(filePath, exc, needDeleted) {
         if (needDeleted) deleteFile(filePath);
     }
 }
-async function installCommand(commander, fileType) {
+function installCommand(commander, fileType) {
     log(`The ${commander} must install ${fileType}, do you want to install ${fileType}(Y/N)Y`);
-    process.stdin.on('data', async chunk => {
+    process.stdin.on('data', chunk => {
         const inputName = String(chunk).trim().toString().toLocaleLowerCase();
         if (inputName.indexOf("y") == 0 || inputName == "") {
             log(`Installing ${fileType=='less'?fileType:commander} please waiting...`)
